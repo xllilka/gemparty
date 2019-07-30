@@ -1,0 +1,36 @@
+현재 로그인 된 세션 : <%= current_user.email %><br>
+<a href = "users/sign_out" data-method="delete">Logout</a>
+<p id="notice"><%= notice %></p>
+
+<h1>글과 사진을 넣어보세요</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Content</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @posts.each do |post| %>
+      <tr>
+        <td><%= post.title %></td>
+        <td><%= post.content %></td>
+        <td><%= link_to 'Show', post %></td>
+            <% if current_user == post.user %>
+              <td><%= link_to 'Edit', edit_post_path(@post) %> | <%= link_to 'Destroy', @post, method: :delete, data: { confirm: 'Are you sure you want to delete this job?' } %></td>
+              <td><%= link_to 'Back', posts_path %></td>
+            <% else %>
+              <td><%= link_to 'Back', posts_path %>
+            <% end %>
+      </tr>
+      <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Post', new_post_path %>
+
