@@ -1,24 +1,8 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+#<참고사항>
 
-Things you may want to cover:
+> 1.  글을 쓴 사람만 edit, delete가 가능하게 하려고 하는데 수정하다 보니까 글 새로 생성하는 기능이 안되는데 new페이지는 만진적이 없거든여,,, 왜 이러는지 혹시 설명 가능할까여
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+2. devise gem 구현 완료
+3. carrierwave 구현 완료, 아래꺼 세개 글 들어가보면 사진 올려놨음
