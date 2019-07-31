@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!
+  #set_post랑 load_post랑 뭐각 다름?  
+  before_action :authenticate_user!, only: %i(show new create edit destroy)
 
   # GET /posts
   # GET /posts.json
@@ -11,6 +12,8 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
+    @comment = Comment.new
+    @comments 
   end
 
   # GET /posts/new
@@ -26,9 +29,10 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     @post = Post.new(post_params)
-    Post.create(content: params[:content],
-                image: params[:image])
-    # redirect_to :back
+    # 아래처럼 쓸 수도 있음!
+    # @post = current_user.posts.create post_params
+    # render :index    
+
     respond_to do |format|
       if @post.save
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
@@ -38,6 +42,14 @@ class PostsController < ApplicationController
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
+
+    @comment = current_user.comments.create comment_params
+    render :index
+    # new_comment = Comment.new(content: params[:content],
+    #                           post_id: params[:post_id],
+    #                           user_id: current_user.id)
+    # new_comment.save
+    # redirect_to root_path
   end
 
   # PATCH/PUT /posts/1
@@ -63,7 +75,7 @@ class PostsController < ApplicationController
       format.json { head :no_content }
     end
 
-    @post = current_user.questions.find(params[:id])
+    @post = current_user.posts.find(params[:id])
     @post.destroy
     
   end
@@ -76,6 +88,11 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.permit(:title, :content, :image)
+      params[:post][:user_id] = current_user.id
+      params.require(:post).permit(:title, :content, :image)
+    end
+
+    def comment_params 
+      params.require(:comment).permit(:body)
     end
 end

@@ -1,5 +1,7 @@
 <p id="notice"><%= notice %></p>
 
+<h2><%= @post&.user&.name %></h2>
+
 <p>
   <strong>Title:</strong>
   <%= @post.title %>
@@ -15,5 +17,15 @@
   <img src="<%= @post.image.url %>">
 </p>
 
+<%= form_for(@comment, url: post_comments_path(@post)) do |f| %>
+  <%= f.label :body, "댓글내용" %><br>
+  <%= f.text_area :body %><br>
+
+  <%= f.submit "제출" %>
+<% end %>
+
+
 <%= link_to 'Edit', edit_post_path(@post) %> |
 <%= link_to 'Back', posts_path %>
+
+
